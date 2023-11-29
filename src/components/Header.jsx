@@ -1,6 +1,52 @@
 import React from "react";
 import styled from "styled-components";
 
+function Header({ artist, setArtist }) {
+  const selectArtist = (ArtistName) => {
+    setArtist(ArtistName);
+  };
+
+  return (
+    <div>
+      <TitleBox>
+        <Title>BLACKPINK FANLETTER COLLECTION</Title>
+        <NameBox>
+          <Name
+            value="Jisoo"
+            onClick={() => selectArtist("Jisoo")}
+            clicked={String(artist === "Jisoo")}
+          >
+            Jisoo
+          </Name>
+          <Name
+            value="Jennie"
+            onClick={() => selectArtist("Jennie")}
+            clicked={String(artist === "Jennie")}
+          >
+            Jennie
+          </Name>
+          <Name
+            value="Rose"
+            onClick={() => selectArtist("Rose")}
+            clicked={String(artist === "Rose")}
+          >
+            Rose
+          </Name>
+          <Name
+            value="Lisa"
+            onClick={() => selectArtist("Lisa")}
+            clicked={String(artist === "Lisa")}
+          >
+            Lisa
+          </Name>
+        </NameBox>
+      </TitleBox>
+    </div>
+  );
+}
+
+export default Header;
+
 const TitleBox = styled.header`
   background-image: url(https://file.mk.co.kr/meet/neds/2020/05/image_readtop_2020_455350_15885578894186068.jpg);
   position: relative;
@@ -50,49 +96,3 @@ const Name = styled.li`
     background-color: #f7a7bb;
   }
 `;
-
-function Header({ artist, setArtist }) {
-  const selectArtist = (ArtistName) => {
-    setArtist(ArtistName);
-  };
-
-  return (
-    <div>
-      <TitleBox>
-        <Title>BLACKPINK FANLETTER COLLECTION</Title>
-        <NameBox>
-          <Name
-            value="Jisoo"
-            onClick={() => selectArtist("Jisoo")}
-            clicked={String(artist === "Jisoo")}
-          >
-            Jisoo
-          </Name>
-          <Name
-            value="Jennie"
-            onClick={() => selectArtist("Jennie")}
-            clicked={String(artist === "Jennie")}
-          >
-            Jennie
-          </Name>
-          <Name
-            value="Rose"
-            onClick={() => selectArtist("Rose")}
-            clicked={String(artist === "Rose")}
-          >
-            Rose
-          </Name>
-          <Name
-            value="Lisa"
-            onClick={() => selectArtist("Lisa")}
-            clicked={String(artist === "Lisa")}
-          >
-            Lisa
-          </Name>
-        </NameBox>
-      </TitleBox>
-    </div>
-  );
-}
-
-export default Header;

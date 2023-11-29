@@ -5,63 +5,6 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { completeFanletter } from "redux/config/modules/fanletter";
 
-const FanLetterFormDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-const FanLetterForm = styled.form`
-  width: 500px;
-  background-color: #f7a7bb;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  padding: 20px;
-`;
-
-const FanLetterSection = styled.section`
-  margin-bottom: 10px;
-  display: flex;
-`;
-
-const FanLetterLabel = styled.label`
-  color: black;
-  width: 100px;
-  display: flex;
-  align-items: center;
-`;
-
-const NickNameInput = styled.input`
-  width: 100%;
-  padding: 5px 10px 5px 10px;
-`;
-
-const ContextText = styled.textarea`
-  resize: none;
-  height: 80px;
-  width: 100%;
-  padding: 5px 10px 5px 10px;
-`;
-
-const SubmitBtn = styled.button`
-  font-size: 14px;
-  padding: 5px 10px 5ps 10px;
-  cursor: pointer;
-  user-select: none;
-  background-color: white;
-  border-radius: 5px;
-  text-align: right;
-  border-color: gray;
-  color: black;
-  &:hover {
-    background-color: #f7a7bb;
-  }
-`;
-
-const SubmitBtnDiv = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
-
 function Form() {
   const [nickName, setNickName] = useState("");
   const [content, setContent] = useState("");
@@ -139,3 +82,60 @@ function Form() {
 }
 
 export default Form;
+
+const FanLetterFormDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+const FanLetterForm = styled.form`
+  width: 500px;
+  background-color: #f7a7bb;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  padding: 20px;
+`;
+
+const FanLetterSection = styled.section`
+  margin-bottom: 10px;
+  display: flex;
+`;
+
+const FanLetterLabel = styled.label`
+  color: black;
+  width: 100px;
+  display: flex;
+  align-items: center;
+`;
+
+const NickNameInput = styled.input`
+  width: 100%;
+  padding: 5px 10px 5px 10px;
+`;
+
+const ContextText = styled.textarea`
+  resize: none;
+  height: 80px;
+  width: 100%;
+  padding: 5px 10px 5px 10px;
+`;
+
+const SubmitBtn = styled.button`
+  font-size: 14px;
+  padding: 5px 10px 5ps 10px;
+  cursor: pointer;
+  user-select: none;
+  background-color: white;
+  border-radius: 5px;
+  text-align: right;
+  border-color: gray;
+  color: black;
+  &:hover {
+    background-color: #f7a7bb;
+  }
+`;
+
+const SubmitBtnDiv = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;

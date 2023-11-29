@@ -5,11 +5,6 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 
-const StP = styled.p`
-  font-weight: bold;
-  text-align: center;
-`;
-
 function Home() {
   //이곳에서
   const fanLetters = useSelector((state) => {
@@ -41,3 +36,8 @@ function Home() {
 }
 
 export default Home;
+
+const StP = styled.p`
+  font-weight: bold;
+  text-align: center;
+`;
