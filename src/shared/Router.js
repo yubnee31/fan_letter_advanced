@@ -5,6 +5,7 @@ import Login from "pages/Login";
 import Profile from "pages/Profile";
 import ProtectedRoute from "components/ProtectedRoute";
 import { useSelector } from "react-redux";
+import Layout from "./Layout";
 
 const Router = () => {
   const successLogin = useSelector((state) => state.auth.isAuthenticated);
@@ -13,11 +14,14 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<ProtectedRoute successLogin={successLogin} />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/detail/:id" element={<Detail />} />
-          <Route path="/profile" element={<Profile />} />
+        <Route element={<Layout />}>
+          <Route element={<ProtectedRoute successLogin={successLogin} />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/detail/:id" element={<Detail />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
         </Route>
+
         <Route path="/login" element={<Login successLogin={successLogin} />} />
         <Route path="*" element={<Navigate replace to="/" />} />
       </Routes>

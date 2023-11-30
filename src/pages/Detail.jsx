@@ -42,7 +42,6 @@ function Detail() {
 
   return (
     <StWholeBox>
-      <HomeBtn onClick={() => navigate("/")}>Home</HomeBtn>
       <StDetailBox>
         <div>
           <StHeader>
@@ -112,17 +111,6 @@ const StDetailBox = styled.div`
   padding: 16px;
   border-radius: 20px;
   color: white;
-`;
-
-const HomeBtn = styled.button`
-  position: absolute;
-  top: 30px;
-  left: 30px;
-  background-color: #f789a5;
-  box-shadow: #6b6969 5px 5px 5px;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
 `;
 
 const StHeader = styled.header`
