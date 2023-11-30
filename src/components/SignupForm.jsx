@@ -14,14 +14,19 @@ function SignupForm({ setIsSignUp }) {
       password,
       nickname: nickName,
     };
-    const response = await axios.post(
-      "https://moneyfulpublicpolicy.co.kr/register",
-      userSignupData
-    );
-    console.log(response);
-    setUserId("");
-    setPassword("");
-    setNickName("");
+    try {
+      const response = await axios.post(
+        "https://moneyfulpublicpolicy.co.kr/register",
+        userSignupData
+      );
+      console.log(response);
+      setUserId("");
+      setPassword("");
+      setNickName("");
+      setIsSignUp(true);
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   return (

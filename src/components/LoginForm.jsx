@@ -2,10 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { login } from "redux/config/modules/auth";
 
 function LoginForm({ setIsSignUp }) {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
   const loginBtnHandler = async (e) => {
     e.preventDefault();
@@ -13,13 +16,19 @@ function LoginForm({ setIsSignUp }) {
       id: userId,
       password,
     };
-    const { data } = await axios.post(
-      "https://moneyfulpublicpolicy.co.kr/login",
-      userLoginData
-    );
-    console.log(data);
-    setUserId("");
-    setPassword("");
+    try {
+      const { data } = await axios.post(
+        "https://moneyfulpublicpolicy.co.kr/login",
+        userLoginData
+      );
+      dispatch(login(data));
+      console.log(data);
+      setUserId("");
+      setPassword("");
+    } catch (error) {
+      alert(error.response.data.message);
+      //
+    }
   };
 
   return (

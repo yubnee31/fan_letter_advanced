@@ -4,22 +4,11 @@ import { Navigate } from "react-router-dom";
 import LoginForm from "components/LoginForm";
 import SignupForm from "components/SignupForm";
 
-function Login({ user }) {
+function Login({ successLogin }) {
   const [isSignUp, setIsSignUp] = useState(true);
-  if (user) {
+  if (successLogin) {
     return <Navigate to="/" replace />;
   }
-
-  // const fetchLogin = async () => {
-  //   const response = await axios.post(
-  //     "https://moneyfulpublicpolicy.co.kr/register"
-  //   );
-  //   console.log("resonse", response);
-  // };
-
-  // useEffect(() => {
-  //   fetchLogin();
-  // }, []);
 
   return (
     <div>
