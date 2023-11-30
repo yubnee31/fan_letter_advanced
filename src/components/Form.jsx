@@ -1,15 +1,39 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import uuid from "react-uuid";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { completeFanletter } from "redux/config/modules/fanletter";
+import axios from "axios";
+import { addUserData } from "redux/config/modules/userData";
 
 function Form() {
   const [nickName, setNickName] = useState("");
   const [content, setContent] = useState("");
+  const [loginUserData, SetLoginUserData] = useState({});
   const selectRef = useRef();
   const dispatch = useDispatch();
+
+  const fetchData = async () => {
+    const accessToken = JSON.parse(localStorage.getItem("key")).accessToken;
+    const response = await axios.get(
+      "https://moneyfulpublicpolicy.co.kr/user",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    dispatch(addUserData(response.data));
+    SetLoginUserData(response.data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  console.log(loginUserData);
 
   const date = new Date();
   const UpdataDate = `${date.getFullYear()}-${
@@ -23,10 +47,10 @@ function Form() {
 
   const newLetter = (e) => {
     e.preventDefault();
-    if (!nickName || !content) return alert("닉네임과 내용은 필수값입니다.");
+    if (!content) return alert("팬레터를 작성해보세요.");
     const newFanLetter = {
       createdAt: UpdataDate,
-      nickname: nickName,
+      nickname: loginUserData.nickname,
       avatar:
         "https://mblogthumb-phinf.pstatic.net/MjAyMDExMDFfMTEx/MDAxNjA0MjI5NDA4Mjcy.bP1ZadsnhPnW8AhzMIei6WHdllsbdhc7UJOfo2ENiNEg.RUmfb7EZvjlfnoQKK0fWays6Md2bc1LdG9libPzXGK0g.JPEG.gambasg/%EC%9C%A0%ED%8A%9C%EB%B8%8C_%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84_GP.jpg?type=w400",
       content: content,
@@ -42,14 +66,15 @@ function Form() {
       <FanLetterForm onSubmit={newLetter}>
         <FanLetterSection>
           <FanLetterLabel>닉네임:</FanLetterLabel>
-          <NickNameInput
+          {/* <NickNameInput
             value={nickName}
             onChange={function (e) {
               return setNickName(e.target.value);
             }}
             placeholder="최대 7글자까지 작성할 수 있습니다."
             maxLength="6"
-          ></NickNameInput>
+          ></NickNameInput> */}
+          <StNickName>{loginUserData.nickname}</StNickName>
         </FanLetterSection>
         <FanLetterSection>
           <FanLetterLabel>내용:</FanLetterLabel>
@@ -108,9 +133,14 @@ const FanLetterLabel = styled.label`
   align-items: center;
 `;
 
-const NickNameInput = styled.input`
-  width: 100%;
-  padding: 5px 10px 5px 10px;
+// const NickNameInput = styled.input`
+//   width: 100%;
+//   padding: 5px 10px 5px 10px;
+// `;
+
+const StNickName = styled.span`
+  color: black;
+  margin-bottom: 5px;
 `;
 
 const ContextText = styled.textarea`

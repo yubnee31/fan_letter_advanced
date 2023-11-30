@@ -1,12 +1,11 @@
 import Header from "components/Header";
 import Form from "components/Form";
 import Fanletter from "components/Fanletter";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 
 function Home() {
-  //이곳에서
   const fanLetters = useSelector((state) => {
     return state.fanletter;
   });
