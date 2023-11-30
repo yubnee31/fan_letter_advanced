@@ -7,7 +7,7 @@ import { useState } from "react";
 import ProtectedRoute from "components/ProtectedRoute";
 
 const Router = () => {
-  const [user] = useState(true);
+  const [user] = useState(false);
 
   return (
     <BrowserRouter>
