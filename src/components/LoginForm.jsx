@@ -1,13 +1,25 @@
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
+import axios from "axios";
 
 function LoginForm({ setIsSignUp }) {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
 
-  const loginBtnHandler = (e) => {
+  const loginBtnHandler = async (e) => {
     e.preventDefault();
+    const userLoginData = {
+      id: userId,
+      password,
+    };
+    const { data } = await axios.post(
+      "https://moneyfulpublicpolicy.co.kr/login",
+      userLoginData
+    );
+    console.log(data);
+    setUserId("");
+    setPassword("");
   };
 
   return (

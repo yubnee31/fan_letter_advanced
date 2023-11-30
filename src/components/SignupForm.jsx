@@ -1,13 +1,27 @@
+import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
 
 function SignupForm({ setIsSignUp }) {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
-  const [nickName, setnickName] = useState("");
+  const [nickName, setNickName] = useState("");
 
-  const signupBtnHandler = (e) => {
+  const signupBtnHandler = async (e) => {
     e.preventDefault();
+    const userSignupData = {
+      id: userId,
+      password,
+      nickname: nickName,
+    };
+    const response = await axios.post(
+      "https://moneyfulpublicpolicy.co.kr/register",
+      userSignupData
+    );
+    console.log(response);
+    setUserId("");
+    setPassword("");
+    setNickName("");
   };
 
   return (
@@ -42,7 +56,7 @@ function SignupForm({ setIsSignUp }) {
             type="text"
             value={nickName}
             onChange={function (e) {
-              return setnickName(e.target.value);
+              return setNickName(e.target.value);
             }}
             placeholder="닉네임을 입력해주세요 (1~10글자)"
           ></LoginInput>
