@@ -3,15 +3,21 @@ import Home from "pages/Home";
 import Detail from "pages/Detail";
 import Login from "pages/Login";
 import Profile from "pages/Profile";
+import { useState } from "react";
+import ProtectedRoute from "components/ProtectedRoute";
 
 const Router = () => {
+  const [user] = useState(true);
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/detail/:id" element={<Detail />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route element={<ProtectedRoute user={user} />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/detail/:id" element={<Detail />} />
+          <Route path="/profile" element={<Profile />} />
+        </Route>
+        <Route path="/login" element={<Login user={user} />} />
         <Route path="*" element={<Navigate replace to="/" />} />
       </Routes>
     </BrowserRouter>

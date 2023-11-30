@@ -1,12 +1,29 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import styled from "styled-components";
 
-function Login() {
-  const [isSignUp, setIsSignUp] = useState(true);
+function Login({ user }) {
+  if (user) {
+    return <Navigate to="/" replace />;
+  }
+  // const [isSignUp, setIsSignUp] = useState(true);
+
+  // const fetchLogin = async () => {
+  //   const response = await axios.post(
+  //     "https://moneyfulpublicpolicy.co.kr/register"
+  //   );
+  //   console.log("resonse", response);
+  // };
+
+  // useEffect(() => {
+  //   fetchLogin();
+  // }, []);
 
   return (
     <div>
-      {isSignUp ? (
+      로그인
+      {/* {isSignUp ? (
         <FormDiv>
           <LoginForm>
             <Title>❤️‍🔥 FANLETTER 작성을 위해 로그인해주세요 ❤️‍🔥</Title>
@@ -57,7 +74,7 @@ function Login() {
             </SpanDiv>
           </LoginForm>
         </FormDiv>
-      )}
+      )} */}
     </div>
   );
 }
