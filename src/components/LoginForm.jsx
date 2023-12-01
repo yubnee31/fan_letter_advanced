@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import axios from "axios";
@@ -13,12 +13,6 @@ function LoginForm({ setIsSignUp }) {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   if (localStorage.getItem("accessToken") === null) {
-  //     navigate("/login");
-  //   }
-  // }, []);
 
   const loginBtnHandler = async (e) => {
     e.preventDefault();

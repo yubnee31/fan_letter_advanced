@@ -1,42 +1,18 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import uuid from "react-uuid";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
-import { completeFanletter } from "redux/config/modules/fanletter";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-// import axios from "axios";
+import { __addData } from "redux/config/modules/fanletter";
 
 function Form() {
   const [nickName, setNickName] = useState("");
   const [content, setContent] = useState("");
   const selectRef = useRef();
   const dispatch = useDispatch();
-
   const user = useSelector((state) => state.auth.user);
-
-  // const fetchData = async () => {
-  //   const accessToken = JSON.parse(localStorage.getItem("key")).accessToken;
-  //   const response = await axios.get(
-  //     "https://moneyfulpublicpolicy.co.kr/user",
-  //     {
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${accessToken}`,
-  //       },
-  //     }
-  //   );
-  //   dispatch(addUserData(response.data));
-  //   SetLoginUserData(response.data);
-  // };
-
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
-  // console.log(loginUserData);
 
   const date = new Date();
   const UpdataDate = `${date.getFullYear()}-${
@@ -58,8 +34,10 @@ function Form() {
       content: content,
       writedTo: selectArtist(),
       id: uuid(),
+      userId: user.userId,
     };
-    dispatch(completeFanletter(newFanLetter));
+    dispatch(__addData(newFanLetter));
+    toast.success("팬레터 작성이 완료되었습니다!");
     setNickName("");
     setContent("");
   };

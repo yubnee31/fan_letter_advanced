@@ -1,11 +1,10 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
 import { logout } from "redux/config/modules/auth";
 import styled from "styled-components";
 
 function Layout() {
-  const successLogin = useSelector((state) => state.auth.isAuthenticated);
   const dispatch = useDispatch();
   const logoutBtnHandler = () => {
     return dispatch(logout());

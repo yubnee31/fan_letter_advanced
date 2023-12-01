@@ -3,15 +3,11 @@ import Form from "components/Form";
 import Fanletter from "components/Fanletter";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 function Home() {
   const [artist, setArtist] = useState("Jisoo");
   const letters = useSelector((state) => state.fanletter.letters);
-  console.log(letters);
-  // const fanLetters = useSelector((state) => {
-  //   return state.fanletter;
-  // });
 
   return (
     <div>

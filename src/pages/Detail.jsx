@@ -1,33 +1,34 @@
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  deleteFanletter,
-  updateFanletter,
-} from "redux/config/modules/fanletter";
+import { __deleteData, __updateData } from "redux/config/modules/fanletter";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Detail() {
-  const fanLetters = useSelector((state) => {
-    return state.fanletter;
-  });
-
-  const dispatch = useDispatch();
-
   const { id } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const fanLetters = useSelector((state) => {
+    return state.fanletter.letters;
+  });
+  console.log(fanLetters);
+
+  useEffect(() => {
+    dispatch(__deleteData());
+  }, []);
 
   const foundletter = fanLetters.find((fanletter) => fanletter.id === id);
+  console.log(foundletter);
   const [updateLetter, setUpdateLetter] = useState(foundletter.content);
   const [wantUpdate, setWantUpdate] = useState(false);
 
   const updateBtn = () => {
     if (updateLetter === foundletter.content)
-      toast.error("아무런 수정사항이 없습니다.");
+      alert("아무런 수정사항이 없습니다.");
     else {
-      dispatch(updateFanletter({ id, updateLetter }));
+      dispatch(__updateData({ id, updateLetter }));
       setWantUpdate(false);
       setUpdateLetter("");
       alert("수정하시겠습니까?");
@@ -36,61 +37,63 @@ function Detail() {
   };
 
   const deleteBtn = () => {
-    dispatch(deleteFanletter(id));
+    dispatch(__deleteData(id));
     alert("삭제하시겠습니까?");
 
     navigate("/");
   };
 
   return (
-    <StWholeBox>
+    <>
       <ToastContainer />
-      <StDetailBox>
-        <div>
-          <StHeader>
-            <ImgNameDiv>
-              <ImgFigure>
-                <ImgStyle src="https://mblogthumb-phinf.pstatic.net/MjAyMDExMDFfMTEx/MDAxNjA0MjI5NDA4Mjcy.bP1ZadsnhPnW8AhzMIei6WHdllsbdhc7UJOfo2ENiNEg.RUmfb7EZvjlfnoQKK0fWays6Md2bc1LdG9libPzXGK0g.JPEG.gambasg/%EC%9C%A0%ED%8A%9C%EB%B8%8C_%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84_GP.jpg?type=w400"></ImgStyle>
-              </ImgFigure>
-              <StNickName>{foundletter.nickname}</StNickName>
-            </ImgNameDiv>
-            <StTime>{foundletter.createdAt}</StTime>
-          </StHeader>
-          <StTo>To: {foundletter.writedTo}</StTo>
-        </div>
+      <StWholeBox>
+        <StDetailBox>
+          <div>
+            <StHeader>
+              <ImgNameDiv>
+                <ImgFigure>
+                  <ImgStyle src="https://mblogthumb-phinf.pstatic.net/MjAyMDExMDFfMTEx/MDAxNjA0MjI5NDA4Mjcy.bP1ZadsnhPnW8AhzMIei6WHdllsbdhc7UJOfo2ENiNEg.RUmfb7EZvjlfnoQKK0fWays6Md2bc1LdG9libPzXGK0g.JPEG.gambasg/%EC%9C%A0%ED%8A%9C%EB%B8%8C_%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84_GP.jpg?type=w400"></ImgStyle>
+                </ImgFigure>
+                <StNickName>{foundletter.nickname}</StNickName>
+              </ImgNameDiv>
+              <StTime>{foundletter.createdAt}</StTime>
+            </StHeader>
+            <StTo>To: {foundletter.writedTo}</StTo>
+          </div>
 
-        {wantUpdate ? (
-          <>
-            <Textarea
-              autoFocus
-              defaultValue={foundletter.content}
-              value={updateLetter}
-              onChange={(e) => setUpdateLetter(e.target.value)}
-            ></Textarea>
-            <BtnSection>
-              <StBtnDiv>
-                <StBtn onClick={() => setWantUpdate(false)}>취소</StBtn>
-              </StBtnDiv>
-              <StBtnDiv>
-                <StBtn onClick={updateBtn}>수정완료</StBtn>
-              </StBtnDiv>
-            </BtnSection>
-          </>
-        ) : (
-          <>
-            <StContext>{foundletter.content}</StContext>
-            <BtnSection>
-              <StBtnDiv>
-                <StBtn onClick={() => setWantUpdate(true)}>수정</StBtn>
-              </StBtnDiv>
-              <StBtnDiv>
-                <StBtn onClick={deleteBtn}>삭제</StBtn>
-              </StBtnDiv>
-            </BtnSection>
-          </>
-        )}
-      </StDetailBox>
-    </StWholeBox>
+          {wantUpdate ? (
+            <>
+              <Textarea
+                autoFocus
+                defaultValue={foundletter.content}
+                value={updateLetter}
+                onChange={(e) => setUpdateLetter(e.target.value)}
+              ></Textarea>
+              <BtnSection>
+                <StBtnDiv>
+                  <StBtn onClick={() => setWantUpdate(false)}>취소</StBtn>
+                </StBtnDiv>
+                <StBtnDiv>
+                  <StBtn onClick={updateBtn}>수정완료</StBtn>
+                </StBtnDiv>
+              </BtnSection>
+            </>
+          ) : (
+            <>
+              <StContext>{foundletter.content}</StContext>
+              <BtnSection>
+                <StBtnDiv>
+                  <StBtn onClick={() => setWantUpdate(true)}>수정</StBtn>
+                </StBtnDiv>
+                <StBtnDiv>
+                  <StBtn onClick={deleteBtn}>삭제</StBtn>
+                </StBtnDiv>
+              </BtnSection>
+            </>
+          )}
+        </StDetailBox>
+      </StWholeBox>
+    </>
   );
 }
 
