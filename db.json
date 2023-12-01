@@ -37,13 +37,22 @@
       "userId": "yubnee22"
     },
     {
-      "createdAt": "2023-12-1 23:49:17",
+      "createdAt": "2023-12-1 23:56:35",
       "nickname": "윱니22",
       "avatar": "undefined",
-      "content": "최신순 정렬 됐나?",
+      "content": "최신순 정렬 완성!!",
       "writedTo": "Jisoo",
-      "id": "33243f9a-3237-d790-97e3-f4b26325f652",
+      "id": "0d669ee9-9345-9e50-4c6b-2c03866c741d",
       "userId": "yubnee22"
+    },
+    {
+      "createdAt": "2023-12-2 0:20:18",
+      "nickname": "닉네임1",
+      "avatar": "undefined",
+      "content": "화이팅!!",
+      "writedTo": "Jisoo",
+      "id": "1d73fbdd-76d0-6eea-361a-e6b3396f59c2",
+      "userId": "fanletter1"
     }
   ]
 }
