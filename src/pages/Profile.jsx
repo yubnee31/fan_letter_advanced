@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
@@ -6,6 +6,17 @@ function Profile() {
   const { avatar, nickname, userId } = useSelector((state) => state.auth.user);
   const [isEdit, setIsEdit] = useState(false);
   const [newNickname, setNewNickname] = useState();
+  const [previewImg, setPreviewImg] = useState(null);
+  const imgRef = useRef();
+
+  const changeAvatar = () => {
+    const imgFile = imgRef.current.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(imgFile);
+    reader.onloadend = () => {
+      setPreviewImg(reader.result);
+    };
+  };
 
   return (
     <>
@@ -13,7 +24,15 @@ function Profile() {
         <StMain>
           <Title>MY PROFILE</Title>
 
-          <img src={avatar} />
+          <img src={previewImg || avatar} />
+          <input
+            id="profileImg"
+            type="file"
+            accept="image/*"
+            style={{ display: "none" }}
+            ref={imgRef}
+            onChange={changeAvatar}
+          />
           {isEdit ? (
             <>
               <input
