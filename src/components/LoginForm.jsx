@@ -5,7 +5,6 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { login } from "redux/config/modules/auth";
 import { useNavigate } from "react-router-dom";
-import { addUserData } from "redux/config/modules/userData";
 
 function LoginForm({ setIsSignUp }) {
   const [userId, setUserId] = useState("");
@@ -31,14 +30,11 @@ function LoginForm({ setIsSignUp }) {
         userLoginData
       );
       dispatch(login(data));
-      dispatch(addUserData(data));
-      console.log(data);
       setUserId("");
       setPassword("");
       navigate("/");
     } catch (error) {
       alert(error.response.data.message);
-      //
     }
   };
 

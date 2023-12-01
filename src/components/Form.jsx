@@ -4,36 +4,37 @@ import uuid from "react-uuid";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { completeFanletter } from "redux/config/modules/fanletter";
-import axios from "axios";
-import { addUserData } from "redux/config/modules/userData";
+import { useSelector } from "react-redux";
+// import axios from "axios";
 
 function Form() {
   const [nickName, setNickName] = useState("");
   const [content, setContent] = useState("");
-  const [loginUserData, SetLoginUserData] = useState({});
   const selectRef = useRef();
   const dispatch = useDispatch();
 
-  const fetchData = async () => {
-    const accessToken = JSON.parse(localStorage.getItem("key")).accessToken;
-    const response = await axios.get(
-      "https://moneyfulpublicpolicy.co.kr/user",
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    );
-    dispatch(addUserData(response.data));
-    SetLoginUserData(response.data);
-  };
+  const user = useSelector((state) => state.auth.user);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // const fetchData = async () => {
+  //   const accessToken = JSON.parse(localStorage.getItem("key")).accessToken;
+  //   const response = await axios.get(
+  //     "https://moneyfulpublicpolicy.co.kr/user",
+  //     {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${accessToken}`,
+  //       },
+  //     }
+  //   );
+  //   dispatch(addUserData(response.data));
+  //   SetLoginUserData(response.data);
+  // };
 
-  console.log(loginUserData);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
+
+  // console.log(loginUserData);
 
   const date = new Date();
   const UpdataDate = `${date.getFullYear()}-${
@@ -50,9 +51,8 @@ function Form() {
     if (!content) return alert("팬레터를 작성해보세요.");
     const newFanLetter = {
       createdAt: UpdataDate,
-      nickname: loginUserData.nickname,
-      avatar:
-        "https://mblogthumb-phinf.pstatic.net/MjAyMDExMDFfMTEx/MDAxNjA0MjI5NDA4Mjcy.bP1ZadsnhPnW8AhzMIei6WHdllsbdhc7UJOfo2ENiNEg.RUmfb7EZvjlfnoQKK0fWays6Md2bc1LdG9libPzXGK0g.JPEG.gambasg/%EC%9C%A0%ED%8A%9C%EB%B8%8C_%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84_GP.jpg?type=w400",
+      nickname: user.nickname,
+      avatar: user.avatar,
       content: content,
       writedTo: selectArtist(),
       id: uuid(),
@@ -66,15 +66,7 @@ function Form() {
       <FanLetterForm onSubmit={newLetter}>
         <FanLetterSection>
           <FanLetterLabel>닉네임:</FanLetterLabel>
-          {/* <NickNameInput
-            value={nickName}
-            onChange={function (e) {
-              return setNickName(e.target.value);
-            }}
-            placeholder="최대 7글자까지 작성할 수 있습니다."
-            maxLength="6"
-          ></NickNameInput> */}
-          <StNickName>{loginUserData.nickname}</StNickName>
+          <StNickName>{user.nickname}</StNickName>
         </FanLetterSection>
         <FanLetterSection>
           <FanLetterLabel>내용:</FanLetterLabel>
@@ -132,11 +124,6 @@ const FanLetterLabel = styled.label`
   display: flex;
   align-items: center;
 `;
-
-// const NickNameInput = styled.input`
-//   width: 100%;
-//   padding: 5px 10px 5px 10px;
-// `;
 
 const StNickName = styled.span`
   color: black;

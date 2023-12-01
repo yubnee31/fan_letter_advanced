@@ -15,17 +15,18 @@ function SignupForm({ setIsSignUp }) {
       nickname: nickName,
     };
     try {
-      const response = await axios.post(
+      const { data } = await axios.post(
         "https://moneyfulpublicpolicy.co.kr/register",
         userSignupData
       );
-      console.log(response);
+      console.log(data);
       setUserId("");
       setPassword("");
       setNickName("");
+      alert("회원가입이 완료되었습니다");
       setIsSignUp(true);
     } catch (error) {
-      alert(error.message);
+      alert(error.response.data.message);
     }
   };
 

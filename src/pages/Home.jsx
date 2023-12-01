@@ -4,11 +4,19 @@ import Fanletter from "components/Fanletter";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate();
   const fanLetters = useSelector((state) => {
     return state.fanletter;
   });
+
+  // useEffect(() => {
+  //   if (localStorage.getItem("accessToken") === null) {
+  //     navigate("/login");
+  //   }
+  // }, []);
 
   const [artist, setArtist] = useState("Jisoo");
   return (

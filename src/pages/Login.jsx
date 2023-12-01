@@ -6,6 +6,7 @@ import SignupForm from "components/SignupForm";
 
 function Login({ successLogin }) {
   const [isSignUp, setIsSignUp] = useState(true);
+
   if (successLogin) {
     return <Navigate to="/" replace />;
   }
