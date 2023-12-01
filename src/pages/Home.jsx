@@ -1,36 +1,30 @@
 import Header from "components/Header";
 import Form from "components/Form";
 import Fanletter from "components/Fanletter";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 function Home() {
-  const navigate = useNavigate();
-  const fanLetters = useSelector((state) => {
-    return state.fanletter;
-  });
-
-  // useEffect(() => {
-  //   if (localStorage.getItem("accessToken") === null) {
-  //     navigate("/login");
-  //   }
-  // }, []);
-
   const [artist, setArtist] = useState("Jisoo");
+  const letters = useSelector((state) => state.fanletter.letters);
+  console.log(letters);
+  // const fanLetters = useSelector((state) => {
+  //   return state.fanletter;
+  // });
+
   return (
     <div>
       <Header artist={artist} setArtist={setArtist} />
       <Form />
       <div>
-        {fanLetters
+        {letters
           .filter((fanletter) => fanletter.writedTo === artist)
           .map((fanletter) => (
             <Fanletter fanletter={fanletter} key={fanletter.id} />
           ))}
-        {fanLetters.filter((fanletter) => fanletter.writedTo === artist)
-          .length === 0 ? (
+        {letters.filter((fanletter) => fanletter.writedTo === artist).length ===
+        0 ? (
           <StP>
             남겨진 팬레터가 없습니다. 첫번째 펜레터의 주인공이 돼주세요. ❤️‍🔥
           </StP>
