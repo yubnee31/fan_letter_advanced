@@ -10,12 +10,12 @@ import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const dispatch = useDispatch();
-  const { accessToken } = useSelector((state) => state.auth);
-  console.log(accessToken);
+  // const { accessToken } = useSelector((state) => state.auth);
+  // console.log(accessToken);
 
-  useEffect(() => {
-    dispatch(__getData());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(__getData());
+  // }, []);
 
   // const token = async () => {
   //   try {
@@ -31,8 +31,8 @@ function App() {
   //     console.log(response);
   //   } catch (error) {
   //     console.log(error.response.data.message);
-  //     // toast.warning(error.response.data.message);
-  //     // dispatch(logout());
+  // toast.warning(error.response.data.message);
+  // dispatch(logout());
   //   }
   // };
   // token();

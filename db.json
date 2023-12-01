@@ -1,15 +1,6 @@
 {
   "letters": [
     {
-      "createdAt": "2023-12-1 16:6:35",
-      "nickname": "윱니22",
-      "avatar": "undefined",
-      "content": "추카추카추카",
-      "writedTo": "Jisoo",
-      "id": "b0e2dc64-65c0-8f86-a06c-3f1cb1b50bee",
-      "userId": "yubnee22"
-    },
-    {
       "createdAt": "2023-12-1 17:23:2",
       "nickname": "윱니22",
       "avatar": "undefined",
@@ -43,6 +34,15 @@
       "content": "리사!!",
       "writedTo": "Lisa",
       "id": "5cf1c0c2-a9db-98cd-94b5-47fd19ffdecf",
+      "userId": "yubnee22"
+    },
+    {
+      "createdAt": "2023-12-1 23:49:17",
+      "nickname": "윱니22",
+      "avatar": "undefined",
+      "content": "최신순 정렬 됐나?",
+      "writedTo": "Jisoo",
+      "id": "33243f9a-3237-d790-97e3-f4b26325f652",
       "userId": "yubnee22"
     }
   ]

@@ -22,7 +22,7 @@ function LoginForm({ setIsSignUp }) {
     };
     try {
       const { data } = await axios.post(
-        "https://moneyfulpublicpolicy.co.kr/login",
+        "https://moneyfulpublicpolicy.co.kr/login?expiresIn=15s",
         userLoginData
       );
       dispatch(login(data));

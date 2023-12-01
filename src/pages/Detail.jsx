@@ -16,8 +16,6 @@ function Detail() {
   const [wantUpdate, setWantUpdate] = useState(false);
 
   const { userId } = useSelector((state) => state.auth.user);
-  console.log(userId);
-  console.log(foundletter.userId);
 
   // useEffect(() => {
   //   dispatch(__deleteData());

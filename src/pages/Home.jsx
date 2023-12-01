@@ -13,32 +13,32 @@ function Home() {
   const dispatch = useDispatch();
   const [artist, setArtist] = useState("Jisoo");
   const letters = useSelector((state) => state.fanletter.letters);
-  const { accessToken } = useSelector((state) => state.auth);
-  console.log(accessToken);
+  // const { accessToken } = useSelector((state) => state.auth);
+  // console.log(accessToken);
 
   useEffect(() => {
     dispatch(__getData());
   }, []);
 
-  const token = async () => {
-    try {
-      const response = await axios.get(
-        "https://moneyfulpublicpolicy.co.kr/user",
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-      console.log(response);
-    } catch (error) {
-      console.log("error", error.response.data.message);
+  // const token = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       "https://moneyfulpublicpolicy.co.kr/user",
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${accessToken}`,
+  //         },
+  //       }
+  //     );
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.log("error", error.response.data.message);
 
-      dispatch(logout());
-    }
-  };
-  token();
+  //     // dispatch(logout());
+  //   }
+  // };
+  // token();
 
   return (
     <div>
@@ -47,6 +47,11 @@ function Home() {
       <div>
         {letters
           .filter((fanletter) => fanletter.writedTo === artist)
+          .sort((a, b) => {
+            if (a.createdAt > b.createdAt) return -1;
+            if (a.createdAt < b.createdAt) return 1;
+            return 0;
+          })
           .map((fanletter) => (
             <Fanletter fanletter={fanletter} key={fanletter.id} />
           ))}
