@@ -5,6 +5,8 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { login } from "redux/config/modules/auth";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function LoginForm({ setIsSignUp }) {
   const [userId, setUserId] = useState("");
@@ -30,16 +32,16 @@ function LoginForm({ setIsSignUp }) {
         userLoginData
       );
       dispatch(login(data));
-      setUserId("");
-      setPassword("");
+      alert("로그인이 완료되었습니다. 팬레터를 작성해보세요!");
       navigate("/");
     } catch (error) {
-      alert(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   };
 
   return (
     <>
+      <ToastContainer />
       <FormDiv>
         <StForm onSubmit={loginBtnHandler}>
           <Title>❤️‍🔥 FANLETTER 작성을 위해 로그인해주세요 ❤️‍🔥</Title>

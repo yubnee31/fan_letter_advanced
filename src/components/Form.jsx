@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { completeFanletter } from "redux/config/modules/fanletter";
 import { useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import axios from "axios";
 
 function Form() {
@@ -48,7 +50,7 @@ function Form() {
 
   const newLetter = (e) => {
     e.preventDefault();
-    if (!content) return alert("팬레터를 작성해보세요.");
+    if (!content) return toast.error("내용을 입력해주세요!");
     const newFanLetter = {
       createdAt: UpdataDate,
       nickname: user.nickname,
@@ -62,39 +64,42 @@ function Form() {
     setContent("");
   };
   return (
-    <FanLetterFormDiv>
-      <FanLetterForm onSubmit={newLetter}>
-        <FanLetterSection>
-          <FanLetterLabel>닉네임:</FanLetterLabel>
-          <StNickName>{user.nickname}</StNickName>
-        </FanLetterSection>
-        <FanLetterSection>
-          <FanLetterLabel>내용:</FanLetterLabel>
-          <ContextText
-            value={content}
-            onChange={function (e) {
-              return setContent(e.target.value);
-            }}
-            placeholder="최대 100자까지 작성할 수 있습니다."
-            maxLength="100"
-          ></ContextText>
-        </FanLetterSection>
-        <FanLetterSection>
-          <FanLetterLabel style={{ width: "190px" }}>
-            누구에게 보내실 건가요?
-          </FanLetterLabel>
-          <select onChange={selectArtist} ref={selectRef}>
-            <option value="Jisoo">Jisoo</option>
-            <option value="Jennie">Jennie</option>
-            <option value="Rose">Rose</option>
-            <option value="Lisa">Lisa</option>
-          </select>
-        </FanLetterSection>
-        <SubmitBtnDiv>
-          <SubmitBtn type="submit">등록하기</SubmitBtn>
-        </SubmitBtnDiv>
-      </FanLetterForm>
-    </FanLetterFormDiv>
+    <>
+      <ToastContainer />
+      <FanLetterFormDiv>
+        <FanLetterForm onSubmit={newLetter}>
+          <FanLetterSection>
+            <FanLetterLabel>닉네임:</FanLetterLabel>
+            <StNickName>{user.nickname}</StNickName>
+          </FanLetterSection>
+          <FanLetterSection>
+            <FanLetterLabel>내용:</FanLetterLabel>
+            <ContextText
+              value={content}
+              onChange={function (e) {
+                return setContent(e.target.value);
+              }}
+              placeholder="최대 100자까지 작성할 수 있습니다."
+              maxLength="100"
+            ></ContextText>
+          </FanLetterSection>
+          <FanLetterSection>
+            <FanLetterLabel style={{ width: "190px" }}>
+              누구에게 보내실 건가요?
+            </FanLetterLabel>
+            <select onChange={selectArtist} ref={selectRef}>
+              <option value="Jisoo">Jisoo</option>
+              <option value="Jennie">Jennie</option>
+              <option value="Rose">Rose</option>
+              <option value="Lisa">Lisa</option>
+            </select>
+          </FanLetterSection>
+          <SubmitBtnDiv>
+            <SubmitBtn type="submit">등록하기</SubmitBtn>
+          </SubmitBtnDiv>
+        </FanLetterForm>
+      </FanLetterFormDiv>
+    </>
   );
 }
 

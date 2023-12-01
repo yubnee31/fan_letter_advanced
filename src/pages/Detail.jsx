@@ -6,6 +6,8 @@ import {
   deleteFanletter,
   updateFanletter,
 } from "redux/config/modules/fanletter";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Detail() {
   const fanLetters = useSelector((state) => {
@@ -23,7 +25,7 @@ function Detail() {
 
   const updateBtn = () => {
     if (updateLetter === foundletter.content)
-      alert("아무런 수정사항이 없습니다.");
+      toast.error("아무런 수정사항이 없습니다.");
     else {
       dispatch(updateFanletter({ id, updateLetter }));
       setWantUpdate(false);
@@ -42,6 +44,7 @@ function Detail() {
 
   return (
     <StWholeBox>
+      <ToastContainer />
       <StDetailBox>
         <div>
           <StHeader>

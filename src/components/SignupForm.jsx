@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function SignupForm({ setIsSignUp }) {
   const [userId, setUserId] = useState("");
@@ -20,18 +22,16 @@ function SignupForm({ setIsSignUp }) {
         userSignupData
       );
       console.log(data);
-      setUserId("");
-      setPassword("");
-      setNickName("");
-      alert("회원가입이 완료되었습니다");
+      alert("회원가입이 완료되었습니다. 로그인해주세요!");
       setIsSignUp(true);
     } catch (error) {
-      alert(error.response.data.message);
+      toast.error(error.response.data.message);
     }
   };
 
   return (
     <>
+      <ToastContainer />
       <FormDiv>
         <StForm onSubmit={signupBtnHandler}>
           <Title>❤️‍🔥 FANLETTER 작성을 위해 회원가입해주세요 ❤️‍🔥</Title>
