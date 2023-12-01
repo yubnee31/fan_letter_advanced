@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import { login } from "redux/config/modules/auth";
+import { login } from "redux/modules/auth";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

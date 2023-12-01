@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { __addData } from "redux/config/modules/fanletter";
+import { __addData } from "redux/modules/fanletter";
 
 function Form() {
   const [nickName, setNickName] = useState("");
@@ -38,7 +38,6 @@ function Form() {
     };
     dispatch(__addData(newFanLetter));
     toast.success("팬레터 작성이 완료되었습니다!");
-    setNickName("");
     setContent("");
   };
   return (

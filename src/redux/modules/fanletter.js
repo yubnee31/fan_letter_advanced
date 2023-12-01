@@ -34,8 +34,7 @@ export const __addData = createAsyncThunk(
         "http://localhost:5000/letters",
         payload
       );
-      console.log(response.data);
-      return thunkAPI.fulfillWithValue(response.data);
+      return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       console.log("error", error);
       return thunkAPI.rejectWithValue(error);
@@ -49,8 +48,7 @@ export const __deleteData = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       await axios.delete(`http://localhost:5000/letters/${payload}`);
-      thunkAPI.dispatch(__getData());
-      return thunkAPI.fulfillWithValue();
+      return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       console.log("error", error);
       return thunkAPI.rejectWithValue(error);
@@ -68,7 +66,7 @@ export const __updateData = createAsyncThunk(
         { content: payload.updateLetter }
       );
       console.log(response.data);
-      return thunkAPI.fulfillWithValue(response.data);
+      return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
       console.log("error", error);
       return thunkAPI.rejectWithValue(error);
@@ -104,7 +102,6 @@ const fanletterSlice = createSlice({
       state.isLoading = false;
       state.isError = false;
       state.letters = action.payload;
-      console.log(action.payload);
     },
     [__getData.rejected]: (state, action) => {
       state.isLoading = false;
@@ -120,7 +117,6 @@ const fanletterSlice = createSlice({
       state.isLoading = false;
       state.isError = false;
       state.letters.push(action.payload);
-      console.log(action.payload);
     },
     [__addData.rejected]: (state, action) => {
       state.isLoading = false;
@@ -139,7 +135,7 @@ const fanletterSlice = createSlice({
     [__deleteData.rejected]: (state, action) => {
       state.isLoading = false;
       state.isError = true;
-      state.error = action.payload;
+      state.letters.filter((item) => item.id !== action.payload);
     },
     //__updateData
     [__updateData.pending]: (state, action) => {
@@ -149,9 +145,11 @@ const fanletterSlice = createSlice({
     [__updateData.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isError = false;
-      state.letters[
-        state.letters.findIndex((letter) => letter.id === action.payload.id)
-      ] = action.payload;
+      state.letters.map((item) => {
+        if (item.id === action.payload.id)
+          return { ...item, content: action.payload.updateLetter };
+        else return item;
+      });
     },
     [__updateData.rejected]: (state, action) => {
       state.isLoading = false;

@@ -2,27 +2,28 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { __deleteData, __updateData } from "redux/config/modules/fanletter";
+import { __deleteData, __updateData } from "redux/modules/fanletter";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Detail() {
+  const { letters } = useSelector((state) => state.fanletter);
+  const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const fanLetters = useSelector((state) => {
-    return state.fanletter.letters;
-  });
-  console.log(fanLetters);
-
-  useEffect(() => {
-    dispatch(__deleteData());
-  }, []);
-
-  const foundletter = fanLetters.find((fanletter) => fanletter.id === id);
-  console.log(foundletter);
+  const foundletter = letters.find((fanletter) => fanletter.id === id);
   const [updateLetter, setUpdateLetter] = useState(foundletter.content);
   const [wantUpdate, setWantUpdate] = useState(false);
+
+  const { userId } = useSelector((state) => state.auth.user);
+  console.log(userId);
+  console.log(foundletter.userId);
+
+  // useEffect(() => {
+  //   dispatch(__deleteData());
+  // }, []);
+
+  // 새로고침날라가는거 막아 state날라간대,,,,,,,,
 
   const updateBtn = () => {
     if (updateLetter === foundletter.content)
@@ -61,35 +62,39 @@ function Detail() {
             <StTo>To: {foundletter.writedTo}</StTo>
           </div>
 
-          {wantUpdate ? (
-            <>
-              <Textarea
-                autoFocus
-                defaultValue={foundletter.content}
-                value={updateLetter}
-                onChange={(e) => setUpdateLetter(e.target.value)}
-              ></Textarea>
-              <BtnSection>
-                <StBtnDiv>
-                  <StBtn onClick={() => setWantUpdate(false)}>취소</StBtn>
-                </StBtnDiv>
-                <StBtnDiv>
-                  <StBtn onClick={updateBtn}>수정완료</StBtn>
-                </StBtnDiv>
-              </BtnSection>
-            </>
+          {userId === foundletter.userId ? (
+            wantUpdate ? (
+              <>
+                <Textarea
+                  autoFocus
+                  defaultValue={foundletter.content}
+                  value={updateLetter}
+                  onChange={(e) => setUpdateLetter(e.target.value)}
+                ></Textarea>
+                <BtnSection>
+                  <StBtnDiv>
+                    <StBtn onClick={() => setWantUpdate(false)}>취소</StBtn>
+                  </StBtnDiv>
+                  <StBtnDiv>
+                    <StBtn onClick={updateBtn}>수정완료</StBtn>
+                  </StBtnDiv>
+                </BtnSection>
+              </>
+            ) : (
+              <>
+                <StContext>{foundletter.content}</StContext>
+                <BtnSection>
+                  <StBtnDiv>
+                    <StBtn onClick={() => setWantUpdate(true)}>수정</StBtn>
+                  </StBtnDiv>
+                  <StBtnDiv>
+                    <StBtn onClick={deleteBtn}>삭제</StBtn>
+                  </StBtnDiv>
+                </BtnSection>
+              </>
+            )
           ) : (
-            <>
-              <StContext>{foundletter.content}</StContext>
-              <BtnSection>
-                <StBtnDiv>
-                  <StBtn onClick={() => setWantUpdate(true)}>수정</StBtn>
-                </StBtnDiv>
-                <StBtnDiv>
-                  <StBtn onClick={deleteBtn}>삭제</StBtn>
-                </StBtnDiv>
-              </BtnSection>
-            </>
+            <StContext>{foundletter.content}</StContext>
           )}
         </StDetailBox>
       </StWholeBox>
