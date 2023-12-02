@@ -24,7 +24,8 @@ function Profile() {
         <StMain>
           <Title>MY PROFILE</Title>
 
-          <img src={previewImg || avatar} />
+          <Avatar src={previewImg || avatar} />
+
           <input
             id="profileImg"
             type="file"
@@ -35,6 +36,7 @@ function Profile() {
           />
           {isEdit ? (
             <>
+              <StLabel htmlFor="profileImg">프로필사진 변경</StLabel>
               <input
                 defaultValue={nickname}
                 onChange={(e) => setNewNickname(e.target.value)}
@@ -50,7 +52,7 @@ function Profile() {
               <span>{nickname}</span>
               <span>{userId}</span>
               <div>
-                <button onClick={setIsEdit(true)}>수정하기</button>
+                <button onClick={() => setIsEdit(true)}>수정하기</button>
               </div>
             </>
           )}
@@ -83,4 +85,15 @@ const StMain = styled.main`
 
 const Title = styled.h1`
   font-size: 35px;
+`;
+
+const Avatar = styled.img`
+  object-fit: cover;
+  border-radius: 50%;
+  width: 100px;
+`;
+
+const StLabel = styled.label`
+  cursor: pointer;
+  display: inline-block;
 `;
