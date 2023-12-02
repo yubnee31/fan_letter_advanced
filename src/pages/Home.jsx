@@ -8,40 +8,42 @@ import { __getData } from "redux/modules/fanletter";
 import { useDispatch } from "react-redux";
 import axios from "axios";
 import { logout } from "redux/modules/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Home() {
   const dispatch = useDispatch();
   const [artist, setArtist] = useState("Jisoo");
   const letters = useSelector((state) => state.fanletter.letters);
-  // const { accessToken } = useSelector((state) => state.auth);
-  // console.log(accessToken);
+  const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
     dispatch(__getData());
   }, []);
 
-  // const token = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       "https://moneyfulpublicpolicy.co.kr/user",
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${accessToken}`,
-  //         },
-  //       }
-  //     );
-  //     console.log(response);
-  //   } catch (error) {
-  //     console.log("error", error.response.data.message);
+  const token = async () => {
+    try {
+      const response = await axios.get(
+        "https://moneyfulpublicpolicy.co.kr/user",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      toast.error(error.response.data.message);
 
-  //     // dispatch(logout());
-  //   }
-  // };
-  // token();
+      dispatch(logout());
+    }
+  };
+  token();
 
   return (
     <div>
+      <ToastContainer />
       <Header artist={artist} setArtist={setArtist} />
       <Form />
       <div>

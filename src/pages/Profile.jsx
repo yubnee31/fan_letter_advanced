@@ -67,7 +67,7 @@ function Profile() {
       toast.success(data.message);
       setIsEdit(false);
     } catch (error) {
-      console.log(error.response.data.message);
+      toast.error("닉네임변경사항이 없습니다.");
     }
   };
 
