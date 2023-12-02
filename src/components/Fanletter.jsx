@@ -10,7 +10,7 @@ function Fanletter({ fanletter }) {
           <FanLetterList>
             <InfoSection>
               <ImgFigure>
-                <Img src="https://mblogthumb-phinf.pstatic.net/MjAyMDExMDFfMTEx/MDAxNjA0MjI5NDA4Mjcy.bP1ZadsnhPnW8AhzMIei6WHdllsbdhc7UJOfo2ENiNEg.RUmfb7EZvjlfnoQKK0fWays6Md2bc1LdG9libPzXGK0g.JPEG.gambasg/%EC%9C%A0%ED%8A%9C%EB%B8%8C_%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84_GP.jpg?type=w400"></Img>
+                <Img src={fanletter.avatar}></Img>
               </ImgFigure>
               <NameTimeDiv>
                 <span>{fanletter.nickname}</span>

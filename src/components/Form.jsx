@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { __addData } from "redux/modules/fanletter";
+import defaultImg from "../assets/defaultImg.jpg";
 
 function Form() {
   const [nickName, setNickName] = useState("");
@@ -30,7 +31,7 @@ function Form() {
     const newFanLetter = {
       createdAt: UpdataDate,
       nickname: user.nickname,
-      avatar: user.avatar,
+      avatar: user.avatar ?? defaultImg,
       content: content,
       writedTo: selectArtist(),
       id: uuid(),
