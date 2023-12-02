@@ -77,21 +77,7 @@ export const __updateData = createAsyncThunk(
 const fanletterSlice = createSlice({
   name: "fanletter",
   initialState,
-  reducers: {
-    // addFanletter: (state, action) => {
-    //   return [action.payload, ...state];
-    // },
-    // deleteFanletter: (state, action) => {
-    //   return state.filter((fanletter) => fanletter.id !== action.payload);
-    // },
-    // updateFanletter: (state, action) => {
-    //   return state.map((fanletter) => {
-    //     if (fanletter.id === action.payload.id)
-    //       return { ...fanletter, content: action.payload.updateLetter };
-    //     return fanletter;
-    //   });
-    // },
-  },
+  reducers: {},
   extraReducers: {
     //__getData
     [__getData.pending]: (state, action) => {

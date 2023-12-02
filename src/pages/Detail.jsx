@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { __deleteData, __updateData } from "redux/modules/fanletter";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import { logout } from "redux/modules/auth";
 
 function Detail() {
   const { letters } = useSelector((state) => state.fanletter);
@@ -16,12 +18,7 @@ function Detail() {
   const [wantUpdate, setWantUpdate] = useState(false);
 
   const { userId } = useSelector((state) => state.auth.user);
-
-  // useEffect(() => {
-  //   dispatch(__deleteData());
-  // }, []);
-
-  // 새로고침날라가는거 막아 state날라간대,,,,,,,,
+  const accessToken = localStorage.getItem("accessToken");
 
   const updateBtn = () => {
     if (updateLetter === foundletter.content)
@@ -38,9 +35,26 @@ function Detail() {
   const deleteBtn = () => {
     dispatch(__deleteData(id));
     alert("삭제하시겠습니까?");
-
     navigate("/");
   };
+
+  const token = async () => {
+    try {
+      const response = await axios.get(
+        "https://moneyfulpublicpolicy.co.kr/user",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
+      );
+    } catch (error) {
+      toast.error(error.response.data.message);
+      dispatch(logout());
+    }
+  };
+  token();
 
   return (
     <>
@@ -51,7 +65,7 @@ function Detail() {
             <StHeader>
               <ImgNameDiv>
                 <ImgFigure>
-                  <ImgStyle src="https://mblogthumb-phinf.pstatic.net/MjAyMDExMDFfMTEx/MDAxNjA0MjI5NDA4Mjcy.bP1ZadsnhPnW8AhzMIei6WHdllsbdhc7UJOfo2ENiNEg.RUmfb7EZvjlfnoQKK0fWays6Md2bc1LdG9libPzXGK0g.JPEG.gambasg/%EC%9C%A0%ED%8A%9C%EB%B8%8C_%EA%B8%B0%EB%B3%B8%ED%94%84%EB%A1%9C%ED%95%84_GP.jpg?type=w400"></ImgStyle>
+                  <ImgStyle src={foundletter.avatar}></ImgStyle>
                 </ImgFigure>
                 <StNickName>{foundletter.nickname}</StNickName>
               </ImgNameDiv>

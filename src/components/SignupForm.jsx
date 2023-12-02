@@ -21,7 +21,6 @@ function SignupForm({ setIsSignUp }) {
         "https://moneyfulpublicpolicy.co.kr/register",
         userSignupData
       );
-      console.log(data);
       alert("회원가입이 완료되었습니다. 로그인해주세요!");
       setIsSignUp(true);
     } catch (error) {

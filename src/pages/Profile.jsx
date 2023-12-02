@@ -42,7 +42,6 @@ function Profile() {
           },
         }
       );
-      console.log(data);
       toast.success("사진이 변경되었습니다.");
       dispatch(editAvatar(data.avatar));
     } catch (error) {
@@ -62,12 +61,11 @@ function Profile() {
           },
         }
       );
-      console.log(data);
       dispatch(editNickname(data.nickname));
       toast.success(data.message);
       setIsEdit(false);
     } catch (error) {
-      toast.error("닉네임변경사항이 없습니다.");
+      toast.error("닉네임 변경사항이 없습니다.");
     }
   };
 

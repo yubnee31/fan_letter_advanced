@@ -9,7 +9,6 @@ import { __addData } from "redux/modules/fanletter";
 import defaultImg from "../assets/defaultImg.jpg";
 
 function Form() {
-  const [nickName, setNickName] = useState("");
   const [content, setContent] = useState("");
   const selectRef = useRef();
   const dispatch = useDispatch();

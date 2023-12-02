@@ -25,7 +25,6 @@ function LoginForm({ setIsSignUp }) {
         "https://moneyfulpublicpolicy.co.kr/login?expiresIn=30m",
         userLoginData
       );
-      console.log(data);
       dispatch(login(data));
       alert("로그인이 완료되었습니다. 팬레터를 작성해보세요!");
       navigate("/");
