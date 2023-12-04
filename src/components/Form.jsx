@@ -36,7 +36,6 @@ function Form() {
       userId: user.userId,
     };
     dispatch(__addData(newFanLetter));
-    // toast.success("팬레터 작성이 완료되었습니다!");
     setContent("");
   };
   return (

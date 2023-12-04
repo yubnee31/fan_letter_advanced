@@ -6,9 +6,6 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { __getData } from "redux/modules/fanletterSlice";
 import { useDispatch } from "react-redux";
-// import { logout } from "redux/modules/authSlice";
-// import { toast } from "react-toastify";
-// import { authApi } from "api";
 
 function Home() {
   const dispatch = useDispatch();
