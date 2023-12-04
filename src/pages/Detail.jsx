@@ -7,7 +7,6 @@ import {
   __getData,
   __updateData,
 } from "redux/modules/fanletterSlice";
-// import { toast } from "react-toastify";
 
 function Detail() {
   const { letters, isLoading } = useSelector((state) => state.fanletter);
