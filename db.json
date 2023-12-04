@@ -55,12 +55,30 @@
       "userId": "\biphone"
     },
     {
-      "createdAt": "2023-12-4 10:36:25",
+      "createdAt": "2023-12-4 17:33:28",
       "nickname": "갱얼쥐",
       "avatar": "https://react-jwt-avatar.s3.ap-northeast-2.amazonaws.com/23-12-02/feed7961-0a9a-48d8-a93a-7b2896be429a.jpg",
-      "content": "팬레터 수정하기~~ 삭제도 가능!!",
+      "content": "수정",
       "writedTo": "Jisoo",
-      "id": "6e284e20-a79c-43ca-b36e-41b190007820",
+      "id": "901a8ca7-44da-cb46-ab83-1f2ac47f2d29",
+      "userId": "fanletter1"
+    },
+    {
+      "createdAt": "2023-12-4 18:30:5",
+      "nickname": "갱얼쥐",
+      "avatar": "https://react-jwt-avatar.s3.ap-northeast-2.amazonaws.com/23-12-02/feed7961-0a9a-48d8-a93a-7b2896be429a.jpg",
+      "content": "수정",
+      "writedTo": "Jisoo",
+      "id": "c0e39f4f-42f6-5519-0c8d-2a893fad7f85",
+      "userId": "fanletter1"
+    },
+    {
+      "createdAt": "2023-12-4 18:40:59",
+      "nickname": "갱얼쥐",
+      "avatar": "https://react-jwt-avatar.s3.ap-northeast-2.amazonaws.com/23-12-02/feed7961-0a9a-48d8-a93a-7b2896be429a.jpg",
+      "content": "ㅎㅎㅎ",
+      "writedTo": "Jisoo",
+      "id": "c5d93e34-9939-f76e-0cb4-b9af9b68c3bd",
       "userId": "fanletter1"
     }
   ]

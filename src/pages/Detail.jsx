@@ -2,27 +2,24 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { __deleteData, __updateData } from "redux/modules/fanletter";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
-import { logout } from "redux/modules/auth";
+import {
+  __deleteData,
+  __getData,
+  __updateData,
+} from "redux/modules/fanletterSlice";
+// import { toast } from "react-toastify";
 
 function Detail() {
-  const { letters } = useSelector((state) => state.fanletter);
+  const { letters, isLoading } = useSelector((state) => state.fanletter);
   const dispatch = useDispatch();
   const { id } = useParams();
   const navigate = useNavigate();
-  const foundletter = letters.find((fanletter) => fanletter.id === id);
-  const [updateLetter, setUpdateLetter] = useState(foundletter.content);
+  const myUserId = useSelector((state) => state.auth.user.userId);
+  const [updateLetter, setUpdateLetter] = useState("");
   const [wantUpdate, setWantUpdate] = useState(false);
 
-  const { userId } = useSelector((state) => state.auth.user);
-  const accessToken = localStorage.getItem("accessToken");
-
   const updateBtn = () => {
-    if (updateLetter === foundletter.content)
-      alert("아무런 수정사항이 없습니다.");
+    if (updateLetter === content) alert("아무런 수정사항이 없습니다.");
     else {
       dispatch(__updateData({ id, updateLetter }));
       setWantUpdate(false);
@@ -38,63 +35,54 @@ function Detail() {
     navigate("/");
   };
 
-  const token = async () => {
-    try {
-      const response = await axios.get(
-        "https://moneyfulpublicpolicy.co.kr/user",
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-    } catch (error) {
-      toast.error(error.response.data.message);
-      dispatch(logout());
-    }
-  };
-  token();
+  useEffect(() => {
+    dispatch(__getData());
+  }, [dispatch]);
+
+  if (isLoading) {
+    return <p>로딩중...</p>;
+  }
+  const { avatar, nickname, createdAt, writedTo, content, userId } =
+    letters.find((fanletter) => fanletter.id === id);
+  const isMine = myUserId === userId;
 
   return (
     <>
-      <ToastContainer />
       <StWholeBox>
         <StDetailBox>
           <div>
             <StHeader>
               <ImgNameDiv>
                 <ImgFigure>
-                  <ImgStyle src={foundletter.avatar}></ImgStyle>
+                  <ImgStyle src={avatar}></ImgStyle>
                 </ImgFigure>
-                <StNickName>{foundletter.nickname}</StNickName>
+                <StNickName>{nickname}</StNickName>
               </ImgNameDiv>
-              <StTime>{foundletter.createdAt}</StTime>
+              <StTime>{createdAt}</StTime>
             </StHeader>
-            <StTo>To: {foundletter.writedTo}</StTo>
+            <StTo>To: {writedTo}</StTo>
           </div>
 
-          {userId === foundletter.userId ? (
-            wantUpdate ? (
-              <>
-                <Textarea
-                  autoFocus
-                  defaultValue={foundletter.content}
-                  value={updateLetter}
-                  onChange={(e) => setUpdateLetter(e.target.value)}
-                ></Textarea>
-                <BtnSection>
-                  <StBtnDiv>
-                    <StBtn onClick={() => setWantUpdate(false)}>취소</StBtn>
-                  </StBtnDiv>
-                  <StBtnDiv>
-                    <StBtn onClick={updateBtn}>수정완료</StBtn>
-                  </StBtnDiv>
-                </BtnSection>
-              </>
-            ) : (
-              <>
-                <StContext>{foundletter.content}</StContext>
+          {wantUpdate ? (
+            <>
+              <Textarea
+                autoFocus
+                defaultValue={content}
+                onChange={(e) => setUpdateLetter(e.target.value)}
+              ></Textarea>
+              <BtnSection>
+                <StBtnDiv>
+                  <StBtn onClick={() => setWantUpdate(false)}>취소</StBtn>
+                </StBtnDiv>
+                <StBtnDiv>
+                  <StBtn onClick={updateBtn}>수정완료</StBtn>
+                </StBtnDiv>
+              </BtnSection>
+            </>
+          ) : (
+            <>
+              <StContext>{content}</StContext>
+              {isMine && (
                 <BtnSection>
                   <StBtnDiv>
                     <StBtn onClick={() => setWantUpdate(true)}>수정</StBtn>
@@ -103,10 +91,8 @@ function Detail() {
                     <StBtn onClick={deleteBtn}>삭제</StBtn>
                   </StBtnDiv>
                 </BtnSection>
-              </>
-            )
-          ) : (
-            <StContext>{foundletter.content}</StContext>
+              )}
+            </>
           )}
         </StDetailBox>
       </StWholeBox>

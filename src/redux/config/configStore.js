@@ -1,6 +1,6 @@
-import fanletter from "../modules/fanletter";
+import fanletter from "../modules/fanletterSlice";
 import { configureStore } from "@reduxjs/toolkit";
-import auth from "../modules/auth";
+import auth from "../modules/authSlice";
 
 const store = configureStore({
   reducer: {
@@ -9,4 +9,5 @@ const store = configureStore({
   },
 });
 
-export default store;
+const getStore = () => store;
+export default getStore;

@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { jsonApi } from "api";
 
 const initialState = {
   letters: [{}],
-  isLoading: false,
+  isLoading: true,
   isError: false,
   error: null,
 };
@@ -13,13 +13,11 @@ export const __getData = createAsyncThunk(
   "getData",
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.get(
-        "http://localhost:5000/letters?_sort=createdAt&_order=desc"
+      const response = await jsonApi.get(
+        "/letters?_sort=createdAt&_order=desc"
       );
-      console.log(response.data);
       return thunkAPI.fulfillWithValue(response.data);
     } catch (error) {
-      console.log("error", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -30,13 +28,10 @@ export const __addData = createAsyncThunk(
   "addData",
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.post(
-        "http://localhost:5000/letters",
-        payload
-      );
-      return thunkAPI.fulfillWithValue(payload);
+      await jsonApi.post("/letters", payload);
+      const { data } = await jsonApi.get("/letters");
+      return thunkAPI.fulfillWithValue(data);
     } catch (error) {
-      console.log("error", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -47,10 +42,9 @@ export const __deleteData = createAsyncThunk(
   "deleteData",
   async (payload, thunkAPI) => {
     try {
-      await axios.delete(`http://localhost:5000/letters/${payload}`);
+      await jsonApi.delete(`/letters/${payload}`);
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
-      console.log("error", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -61,14 +55,11 @@ export const __updateData = createAsyncThunk(
   "updateData",
   async (payload, thunkAPI) => {
     try {
-      const response = await axios.patch(
-        `http://localhost:5000/letters/${payload.id}`,
-        { content: payload.updateLetter }
-      );
-      console.log(response.data);
+      await jsonApi.patch(`/letters/${payload.id}`, {
+        content: payload.updateLetter,
+      });
       return thunkAPI.fulfillWithValue(payload);
     } catch (error) {
-      console.log("error", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -87,6 +78,7 @@ const fanletterSlice = createSlice({
     [__getData.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.isError = false;
+      state.error = null;
       state.letters = action.payload;
     },
     [__getData.rejected]: (state, action) => {
@@ -101,8 +93,9 @@ const fanletterSlice = createSlice({
     },
     [__addData.fulfilled]: (state, action) => {
       state.isLoading = false;
+      state.letters = action.payload;
       state.isError = false;
-      state.letters.push(action.payload);
+      state.error = null;
     },
     [__addData.rejected]: (state, action) => {
       state.isLoading = false;

@@ -4,45 +4,23 @@ import Fanletter from "components/Fanletter";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { __getData } from "redux/modules/fanletter";
+import { __getData } from "redux/modules/fanletterSlice";
 import { useDispatch } from "react-redux";
-import axios from "axios";
-import { logout } from "redux/modules/auth";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { logout } from "redux/modules/authSlice";
+// import { toast } from "react-toastify";
+// import { authApi } from "api";
 
 function Home() {
   const dispatch = useDispatch();
   const [artist, setArtist] = useState("Jisoo");
   const letters = useSelector((state) => state.fanletter.letters);
-  const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
     dispatch(__getData());
-  }, []);
-
-  const token = async () => {
-    try {
-      const response = await axios.get(
-        "https://moneyfulpublicpolicy.co.kr/user",
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-    } catch (error) {
-      toast.error(error.response.data.message);
-
-      dispatch(logout());
-    }
-  };
-  token();
+  }, [dispatch]);
 
   return (
     <div>
-      <ToastContainer />
       <Header artist={artist} setArtist={setArtist} />
       <Form />
       <div>

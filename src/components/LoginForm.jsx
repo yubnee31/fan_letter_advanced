@@ -1,18 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
-import axios from "axios";
 import { useDispatch } from "react-redux";
-import { login } from "redux/modules/auth";
-import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { __login } from "redux/modules/authSlice";
 
 function LoginForm({ setIsSignUp }) {
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const loginBtnHandler = async (e) => {
     e.preventDefault();
@@ -20,22 +15,11 @@ function LoginForm({ setIsSignUp }) {
       id: userId,
       password,
     };
-    try {
-      const { data } = await axios.post(
-        "https://moneyfulpublicpolicy.co.kr/login?expiresIn=30m",
-        userLoginData
-      );
-      dispatch(login(data));
-      alert("로그인이 완료되었습니다. 팬레터를 작성해보세요!");
-      navigate("/");
-    } catch (error) {
-      toast.error(error.response.data.message);
-    }
+    dispatch(__login(userLoginData));
   };
 
   return (
     <>
-      <ToastContainer />
       <FormDiv>
         <StForm onSubmit={loginBtnHandler}>
           <Title>❤️‍🔥 FANLETTER 작성을 위해 로그인해주세요 ❤️‍🔥</Title>

@@ -1,8 +1,7 @@
-import axios from "axios";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+import { authApi } from "api";
 
 function SignupForm({ setIsSignUp }) {
   const [userId, setUserId] = useState("");
@@ -17,12 +16,11 @@ function SignupForm({ setIsSignUp }) {
       nickname: nickName,
     };
     try {
-      const { data } = await axios.post(
-        "https://moneyfulpublicpolicy.co.kr/register",
-        userSignupData
-      );
-      alert("회원가입이 완료되었습니다. 로그인해주세요!");
-      setIsSignUp(true);
+      const { data } = await authApi.post("/register", userSignupData);
+      if (data.success) {
+        toast.success("회원가입이 완료되었습니다. 로그인해주세요!");
+        setIsSignUp(true);
+      }
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -30,7 +28,6 @@ function SignupForm({ setIsSignUp }) {
 
   return (
     <>
-      <ToastContainer />
       <FormDiv>
         <StForm onSubmit={signupBtnHandler}>
           <Title>❤️‍🔥 FANLETTER 작성을 위해 회원가입해주세요 ❤️‍🔥</Title>

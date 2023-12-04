@@ -5,11 +5,10 @@ import Login from "pages/Login";
 import Profile from "pages/Profile";
 import ProtectedRoute from "components/ProtectedRoute";
 import { useSelector } from "react-redux";
-import Layout from "./Layout";
+import Layout from "../components/Layout";
 
 const Router = () => {
   const successLogin = useSelector((state) => state.auth.isAuthenticated);
-  console.log(successLogin);
 
   return (
     <BrowserRouter>
@@ -19,6 +18,7 @@ const Router = () => {
             <Route path="/" element={<Home />} />
             <Route path="/detail/:id" element={<Detail />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="*" element={<Navigate replace to="/" />} />
           </Route>
         </Route>
 

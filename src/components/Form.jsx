@@ -3,9 +3,8 @@ import { useState } from "react";
 import uuid from "react-uuid";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { __addData } from "redux/modules/fanletter";
+import { toast } from "react-toastify";
+import { __addData } from "redux/modules/fanletterSlice";
 import defaultImg from "../assets/defaultImg.jpg";
 
 function Form() {
@@ -28,7 +27,7 @@ function Form() {
     e.preventDefault();
     if (!content) return toast.error("내용을 입력해주세요!");
     const newFanLetter = {
-      createdAt: UpdataDate,
+      createdAt: UpdataDate.toString(),
       nickname: user.nickname,
       avatar: user.avatar ?? defaultImg,
       content: content,
@@ -37,12 +36,11 @@ function Form() {
       userId: user.userId,
     };
     dispatch(__addData(newFanLetter));
-    toast.success("팬레터 작성이 완료되었습니다!");
+    // toast.success("팬레터 작성이 완료되었습니다!");
     setContent("");
   };
   return (
     <>
-      <ToastContainer />
       <FanLetterFormDiv>
         <FanLetterForm onSubmit={newLetter}>
           <FanLetterSection>

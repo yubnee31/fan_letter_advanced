@@ -3,10 +3,9 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 import defaultImg from "../assets/defaultImg.jpg";
 import { useDispatch } from "react-redux";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { editAvatar, editNickname } from "redux/modules/auth";
+import { toast } from "react-toastify";
+import { editAvatar, editNickname } from "redux/modules/authSlice";
+import { authApi } from "api";
 
 function Profile() {
   const { avatar, nickname, userId } = useSelector((state) => state.auth.user);
@@ -32,16 +31,12 @@ function Profile() {
     const formData = new FormData();
     formData.append("avatar", newAvatar);
     try {
-      const { data } = await axios.patch(
-        "https://moneyfulpublicpolicy.co.kr/profile",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      const { data } = await authApi.patch("/profile", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       toast.success("사진이 변경되었습니다.");
       dispatch(editAvatar(data.avatar));
     } catch (error) {
@@ -51,8 +46,8 @@ function Profile() {
 
   const updateNickname = async () => {
     try {
-      const { data } = await axios.patch(
-        "https://moneyfulpublicpolicy.co.kr/profile",
+      const { data } = await authApi.patch(
+        "/profile",
         { nickname: newNickname },
         {
           headers: {
@@ -71,7 +66,6 @@ function Profile() {
 
   return (
     <>
-      <ToastContainer />
       <ProfileDiv>
         <StMain>
           <Title>{userId}님의 PROFILE</Title>

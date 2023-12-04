@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
-import { logout } from "redux/modules/auth";
+import { logout } from "redux/modules/authSlice";
 import styled from "styled-components";
 
 function Layout() {
@@ -13,13 +13,9 @@ function Layout() {
   return (
     <>
       <StNav>
-        <Link to="/" style={{ textDecoration: "none" }}>
-          HOME
-        </Link>
+        <Link to="/">HOME</Link>
         <div>
-          <Link to="/profile" style={{ textDecoration: "none" }}>
-            MY PROFILE
-          </Link>
+          <Link to="/profile">MY PROFILE</Link>
           <span onClick={logoutBtnHandler}>LOGOUT</span>
         </div>
       </StNav>
@@ -40,9 +36,11 @@ const StNav = styled.nav`
   width: 100%;
   color: black;
   height: 45px;
+  user-select: none;
 
   a {
-    color: black;
+    text-decoration: none;
+    color: inherit;
     margin-left: 20px;
   }
 
