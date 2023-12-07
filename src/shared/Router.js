@@ -23,7 +23,6 @@ const Router = () => {
         </Route>
 
         <Route path="/login" element={<Login successLogin={successLogin} />} />
-        <Route path="*" element={<Navigate replace to="/" />} />
       </Routes>
     </BrowserRouter>
   );

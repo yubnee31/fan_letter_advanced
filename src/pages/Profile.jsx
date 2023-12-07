@@ -13,9 +13,9 @@ function Profile() {
   const [isEdit, setIsEdit] = useState(false);
   const [newNickname, setNewNickname] = useState();
   const [newAvatar, setNewAvatar] = useState(null);
+  const dispatch = useDispatch();
   const [previewImg, setPreviewImg] = useState(null);
   const imgRef = useRef();
-  const dispatch = useDispatch();
 
   const changeAvatar = () => {
     const imgFile = imgRef.current.files[0];
